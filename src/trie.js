@@ -7,21 +7,20 @@ class TrieNode {
     this.character = character;
     this.children = children;
   }
-∂
+
   isLeaf() {
     return this.children.length === 0 || this.character === '.';
   }
 }
 
-
 class Trie {
   rootNode;
 
-  constructor(rootNode = new TrieNode()) {
+  constructor(rootNode =  new TrieNode()) {
     this.rootNode = rootNode;
   }
 
-  insert(str) {
+  add(str) {
     if (str.length === 0) return;
 
     const strToInsert = `${str}.`
@@ -34,7 +33,7 @@ class Trie {
     }
   }
 
-  findLongestCommonPrefix() {
+  longestCommonPrefix() {
     let toReturn = '';
     let curr = this.rootNode;
     while (!curr.isLeaf() && curr.children.size === 1) {
@@ -51,12 +50,7 @@ class Trie {
   }
 }
 
-const main = () => {
-  const trie = new Trie();
-  trie.insert("a");
-  trie.insert("a");
-  // console.log(trie);
-  console.log(trie.findLongestCommonPrefix())
+module.exports = {
+  TrieNode,
+  Trie
 }
-
-main();
