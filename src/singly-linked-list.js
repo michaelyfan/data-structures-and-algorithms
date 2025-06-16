@@ -9,6 +9,8 @@ class LinkedListNode() {
   }
 }
 
+// features: length and tail
+// TODO finish -- should support emptiness
 class SinglyLinkedList {
   // todo finish
   head = new LinkedListNode();
@@ -26,7 +28,13 @@ class SinglyLinkedList {
   }
 
   pop() {
+    // there must always be a head
+    if (this.head.next == undefined) {
+      return;
+    }
+
     let curr = this.head;
+    while (this.head.)
 
   }
 
@@ -39,7 +47,10 @@ class SinglyLinkedList {
     
     let curr = this.head;
     while (curr != null) {
-      s += `${curr.val} -> `
+      s += `${curr.val}`
+      if (curr.next != null) {
+        toReturn += ' -> '
+      }
     }
 
     return s.substring(0, s.length - 3);
