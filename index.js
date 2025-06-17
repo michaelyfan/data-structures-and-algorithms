@@ -1,5 +1,5 @@
 const { Trie } = require("./src/trie");
-const { SinglyLinkedList } = require("./src/singlyLinkedList");
+const { SinglyLinkedList } = require("./src/linkedList/singlyLinkedListNoTail");
 
 
 const main = () => {

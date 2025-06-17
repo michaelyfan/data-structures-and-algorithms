@@ -1,4 +1,4 @@
-const { SinglyLinkedList, SinglyLinkedListNode } = require('../src/singlyLinkedList');
+const { SinglyLinkedList, SinglyLinkedListNode } = require('../src/linkedList/singlyLinkedListNoTail');
 
 describe('SinglyLinkedList', () => {
   let list;
