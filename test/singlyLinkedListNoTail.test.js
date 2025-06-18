@@ -1,84 +1,87 @@
-const { SinglyLinkedList, SinglyLinkedListNode } = require('../src/linkedList/singlyLinkedListNoTail');
+const { SinglyLinkedListNoTail } = require('../src/linkedList/singlyLinkedListNoTail');
+const { buildOutOfBoundsError } = require('../src/utils');
 
-describe('SinglyLinkedList', () => {
+describe('SinglyLinkedListNoTail', () => {
   let list;
 
   beforeEach(() => {
-    list = new SinglyLinkedList();
+    list = new SinglyLinkedListNoTail();
   });
 
-  test('get returns the value at the given index or undefined if out of bounds', () => {
-    list.push('a');
-    list.push('b');
-    list.push('c');
-    expect(list.get(0)).toBe('a');
-    expect(list.get(1)).toBe('b');
-    expect(list.get(2)).toBe('c');
-    expect(list.get(-1)).toBeUndefined();
-    expect(list.get(3)).toBeUndefined();
-    const emptyList = new SinglyLinkedList();
-    expect(emptyList.get(0)).toBeUndefined();
+  test('addToStart adds elements to the front', () => {
+    list.addToStart(1);
+    list.addToStart(2);
+    expect(list.head.data).toBe(2);
+    expect(list.head.next.data).toBe(1);
   });
 
-  test('push adds elements to the list', () => {
-    list.push(1);
-    list.push(2);
+  test('addAt adds elements at specific index', () => {
+    list.addToStart(1); // [1]
+    list.addAt(1, 3);   // [1, 3]
+    list.addAt(1, 2);   // [1, 2, 3]
+    expect(list.get(0)).toBe(1);
+    expect(list.get(1)).toBe(2);
+    expect(list.get(2)).toBe(3);
+  });
+
+  test('get throws on out of bounds', () => {
+    expect(() => list.get(0)).toThrow(buildOutOfBoundsError().message);
+    list.addToStart(1);
+    expect(() => list.get(1)).toThrow(buildOutOfBoundsError().message);
+    expect(list.get(0)).toBe(1);
+  });
+
+  test('push adds to the end', () => {
+    list.addToStart(1);
+    list.addToStart(2);
     list.push(3);
-    expect(list.length).toBe(3);
-    expect(list.head.data).toBe(1);
-    expect(list.head.next.data).toBe(2);
-    expect(list.head.next.next.data).toBe(3);
+    expect(list.get(2)).toBe(3);
   });
 
-  test('pop removes and returns the last node', () => {
-    list.push(1);
-    list.push(2);
-    list.push(3);
-    const removed = list.pop();
-    expect(removed.data).toBe(3);
-    expect(list.length).toBe(2);
-    expect(list.toString()).toBe('LinkedList 1 -> 2');
-  });
-
-  test('pop returns undefined on empty list', () => {
-    expect(list.pop()).toBeUndefined();
-  });
-
-  test('removeFirst removes and returns the head node', () => {
-    list.push(10);
-    list.push(20);
+  test('removeFirst removes the first node', () => {
+    list.addToStart(1);
+    list.addToStart(2);
     const removed = list.removeFirst();
-    expect(removed.data).toBe(10);
-    expect(list.length).toBe(1);
-    expect(list.head.data).toBe(20);
+    expect(removed.data).toBe(2);
+    expect(list.head.data).toBe(1);
   });
 
-  test('removeFirst returns undefined on empty list', () => {
-    expect(list.removeFirst()).toBeUndefined();
-  });
-
-  test('removeAt removes and returns the node at given index', () => {
-    list.push('a');
-    list.push('b');
-    list.push('c');
+  test('removeAt removes node at index', () => {
+    list.addToStart(1);
+    list.addToStart(2);
+    list.addToStart(3); // [3,2,1]
     const removed = list.removeAt(1);
-    expect(removed.data).toBe('b');
+    expect(removed.data).toBe(2);
+    expect(list.get(0)).toBe(3);
+    expect(list.get(1)).toBe(1);
+  });
+
+  test('pop removes from end', () => {
+    list.addToStart(1);
+    list.addToStart(2);
+    list.addToStart(3); // [3,2,1]
+    const removed = list.pop();
+    expect(removed.data).toBe(1);
     expect(list.length).toBe(2);
-    expect(list.toString()).toBe('LinkedList a -> c');
   });
 
-  test('removeAt returns undefined for out-of-bounds index', () => {
-    list.push(1);
-    expect(list.removeAt(-1)).toBeUndefined();
-    expect(list.removeAt(2)).toBeUndefined();
+  test('toString returns correct string', () => {
+    list.addToStart(1);
+    list.addToStart(2);
+    expect(list.toString()).toBe('LinkedList 2 -> 1');
   });
 
-  test('toString returns correct string representation', () => {
-    expect(list.toString()).toBe('LinkedList ');
-    list.push(5);
-    expect(list.toString()).toBe('LinkedList 5');
-    list.push(6);
-    expect(list.toString()).toBe('LinkedList 5 -> 6');
+  test('removeFirst throws on empty', () => {
+    expect(() => list.removeFirst()).toThrow(buildOutOfBoundsError().message);
   });
 
-})
+  test('removeAt throws on out of bounds', () => {
+    expect(() => list.removeAt(0)).toThrow(buildOutOfBoundsError().message);
+    list.addToStart(1);
+    expect(() => list.removeAt(1)).toThrow(buildOutOfBoundsError().message);
+  });
+
+  test('pop throws on empty', () => {
+    expect(() => list.pop()).toThrow(buildOutOfBoundsError().message);
+  });
+});

@@ -1,9 +1,9 @@
 const { Trie } = require("./src/trie");
-const { SinglyLinkedList } = require("./src/linkedList/singlyLinkedListNoTail");
+const { SinglyLinkedListNoTail } = require("./src/linkedList/singlyLinkedListNoTail");
 
 
 const main = () => {
-  const linkedList = new SinglyLinkedList();
+  const linkedList = new SinglyLinkedListNoTail();
   linkedList.push(6);
   linkedList.push(78);
   linkedList.push(2);
