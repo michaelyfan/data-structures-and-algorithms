@@ -1,7 +1,7 @@
 
 const { buildOutOfBoundsError } = require('../utils');
 
-class SinglyLinkedListNoTailNode {
+class SinglyLinkedListNode {
   data;
   next;
   
@@ -18,6 +18,19 @@ class SinglyLinkedListNoTail {
   constructor() {
     this.length = 0;
   }
+
+  /*
+  TODO: revamp to:
+  - getStart
+  - getEnd
+  - get
+  - addStart
+  - add
+  - addEnd
+  - removeStart
+  - remove
+  - removeEnd
+  */
 
   get(index) {
     if (index < 0 || index >= this.length) {
@@ -37,7 +50,7 @@ class SinglyLinkedListNoTail {
   }
 
   addToStart(val) {
-    const newHead = new SinglyLinkedListNoTailNode(val, this.head);
+    const newHead = new SinglyLinkedListNode(val, this.head);
     this.head = newHead;
     this.length++;
   }
@@ -58,7 +71,7 @@ class SinglyLinkedListNoTail {
       curr = curr.next;
       i++;
     }
-    const node = new SinglyLinkedListNoTailNode(val, curr.next);
+    const node = new SinglyLinkedListNode(val, curr.next);
     curr.next = node;
     this.length++;
   }
@@ -125,5 +138,5 @@ class SinglyLinkedListNoTail {
 
 module.exports = {
   SinglyLinkedListNoTail,
-  SinglyLinkedListNoTailNode
+  SinglyLinkedListNode
 }
