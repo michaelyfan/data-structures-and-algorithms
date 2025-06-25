@@ -49,11 +49,11 @@ class DoublyLinkedListNoTail {
     };
 
     if (index === 0) {
-      const newHead = new DoublyLinkedListNode(val, this.head, undefined);
+      const node = new DoublyLinkedListNode(val, this.head, undefined);
       if (this.head) { // difference of doubly: handle prev
-        this.head.prev = newHead; 
+        this.head.prev = node; 
       }
-      this.head = newHead;
+      this.head = node;
       this.length++;
       return;
     }

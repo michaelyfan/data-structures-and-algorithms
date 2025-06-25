@@ -47,8 +47,8 @@ class SinglyLinkedListNoTail {
     };
 
     if (index === 0) {
-      const newHead = new SinglyLinkedListNode(val, this.head);
-      this.head = newHead;
+      const node = new SinglyLinkedListNode(val, this.head);
+      this.head = node;
       this.length++;
       return;
     }

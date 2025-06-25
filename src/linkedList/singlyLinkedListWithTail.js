@@ -42,12 +42,12 @@ class SinglyLinkedListWithTail {
       throw buildOutOfBoundsError();
     };
     if (index === 0) {
-      const newHead = new SinglyLinkedListNode(val, this.head);
-      this.head = newHead;
+      const node = new SinglyLinkedListNode(val, this.head);
+      this.head = node;
 
       // difference of tail: need to update it when adding to empty list
       if (this.length === 0) {
-        this.tail = newHead;
+        this.tail = node;
       }
 
       this.length++;
@@ -55,9 +55,9 @@ class SinglyLinkedListWithTail {
     }
     // benefit of tail: adding to the end is more efficient
     if (index === this.length) {
-      const newTail = new SinglyLinkedListNode(val);
-      this.tail.next = newTail;
-      this.tail = newTail;
+      const node = new SinglyLinkedListNode(val);
+      this.tail.next = node;
+      this.tail = node;
       this.length++;
       return;
     }
@@ -89,10 +89,10 @@ class SinglyLinkedListWithTail {
 
     // using a placeholder node to begin iteration
     let curr = new SinglyLinkedListNode(null, this.head);
-    let nextIndex = 0;
-    while (nextIndex !== index) {
+    let i = 0;
+    while (i !== index) {
       curr = curr.next;
-      nextIndex++;
+      i++;
     }
     const temp = curr.next;
     curr.next = curr.next.next;
