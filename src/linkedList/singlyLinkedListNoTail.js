@@ -19,22 +19,13 @@ class SinglyLinkedListNoTail {
     this.length = 0;
   }
 
-  getStart(val) {
-    const newHead = new SinglyLinkedListNode(val, this.head);
-    this.head = newHead;
-    this.length++;
-  }
-
   get(index) {
     if (index < 0 || index >= this.length) {
       throw buildOutOfBoundsError();
     };
-    if (index === 0) {
-      return this.head.data
-    };
     
-    let curr = this.head.next;
-    let i = 1;
+    let curr = this.head;
+    let i = 0;
     while (i !== index) {
       curr = curr.next;
       i++;
@@ -42,13 +33,12 @@ class SinglyLinkedListNoTail {
     return curr.data;
   }
 
-  getEnd() {
-    return this.get(this.length - 1);
+  getStart() {
+    return this.get(0);
   }
 
-  addStart(val) {
-    const newHead = new SinglyLinkedListNode(val, this.head);
-    this.head = newHead;
+  getEnd() {
+    return this.get(this.length - 1);
   }
 
   add(index, val) {
@@ -57,7 +47,9 @@ class SinglyLinkedListNoTail {
     };
 
     if (index === 0) {
-      this.getStart(val);
+      const newHead = new SinglyLinkedListNode(val, this.head);
+      this.head = newHead;
+      this.length++;
       return;
     }
 
@@ -72,28 +64,24 @@ class SinglyLinkedListNoTail {
     this.length++;
   }
 
+  addStart(val) {
+    this.add(0, val);
+  }
+
   addEnd(val) {
     this.add(this.length, val);
   }
 
-  // returns the removed node
-  removeStart() {
-    if (this.length === 0) {
-      throw buildOutOfBoundsError();
-    };
-    const temp = this.head;
-    this.head = this.head.next;
-    this.length--;
-    return temp;
-  }
-
-  // returns the removed node
+  // returns the removed value
   remove(index) {
     if (index < 0 || index >= this.length) {
       throw buildOutOfBoundsError();
     };
     if (index === 0) {
-      return this.removeStart();
+      const temp = this.head;
+      this.head = this.head.next;
+      this.length--;
+      return temp.data;
     }
 
     let nextIndex = 1;
@@ -105,18 +93,19 @@ class SinglyLinkedListNoTail {
     const temp = curr.next;
     curr.next = curr.next.next;
     this.length--;
-    return temp;
+    return temp.data;
+  }
+
+  removeStart() {
+    return this.remove(0);
   }
 
   removeEnd() {
-    if (this.length === 0){
-      throw buildOutOfBoundsError();
-    };
     return this.remove(this.length - 1);
   }
 
   toString() {
-    let s = 'LinkedList ';
+    let s = 'SinglyLinkedListNoTail ';
     
     let curr = this.head;
     while (curr != null) {

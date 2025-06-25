@@ -1,11 +1,11 @@
-const { SinglyLinkedListNoTail } = require('../src/linkedList/singlyLinkedListNoTail');
+const { SinglyLinkedListWithTail } = require('../src/linkedList/singlyLinkedListWithTail');
 const { buildOutOfBoundsError } = require('../src/utils');
 
-describe('SinglyLinkedListNoTail', () => {
+describe('SinglyLinkedListWithTail', () => {
   let list;
 
   beforeEach(() => {
-    list = new SinglyLinkedListNoTail();
+    list = new SinglyLinkedListWithTail();
   });
 
   test('get gets value at index or throws if out of bounds', () => {
@@ -90,9 +90,10 @@ describe('SinglyLinkedListNoTail', () => {
     expect(() => list.removeEnd()).toThrow();
     list.addEnd(8);
     list.addEnd(9);
+    list.addEnd(10);
+    expect(list.length).toBe(3);
+    expect(list.removeEnd()).toBe(10);
+    expect(list.getEnd()).toBe(9);
     expect(list.length).toBe(2);
-    expect(list.removeEnd()).toBe(9);
-    expect(list.getEnd()).toBe(8);
-    expect(list.length).toBe(1);
   });
 });

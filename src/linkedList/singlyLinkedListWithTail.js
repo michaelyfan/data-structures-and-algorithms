@@ -15,17 +15,13 @@ class SinglyLinkedListWithTail {
     if (index < 0 || index >= this.length) {
       throw buildOutOfBoundsError();
     };
-    if (index === 0) {
-      return this.head.data
-    };
-
-    // benefit of tail
+    // benefit of tail: getting the end is more efficient
     if (index === this.length - 1) {
       return this.tail.data;
     }
 
-    let curr = this.head.next;
-    let i = 1;
+    let curr = this.head;
+    let i = 0;
     while (i !== index) {
       curr = curr.next;
       i++;
@@ -33,25 +29,36 @@ class SinglyLinkedListWithTail {
     return curr.data;
   }
 
-  addToStart(val) {
-    const newHead = new SinglyLinkedListNode(val, this.head);
-    this.head = newHead;
-    this.length++;
+  getStart(val) {
+    return this.get(0);
   }
 
-  addAt(index, val) {
+  getEnd() {
+    return this.get(this.length - 1);
+  }
+
+  add(index, val) {
     if (index < 0 || index > this.length) {
       throw buildOutOfBoundsError();
     };
-
     if (index === 0) {
-      this.addToStart(val);
+      const newHead = new SinglyLinkedListNode(val, this.head);
+      this.head = newHead;
+
+      // difference of tail: need to update it when adding to empty list
+      if (this.length === 0) {
+        this.tail = newHead;
+      }
+
+      this.length++;
       return;
     }
-
-    // benefit of tail
-    if (index === this.length - 1) {
-      this.push(val);
+    // benefit of tail: adding to the end is more efficient
+    if (index === this.length) {
+      const newTail = new SinglyLinkedListNode(val);
+      this.tail.next = newTail;
+      this.tail = newTail;
+      this.length++;
       return;
     }
 
@@ -66,31 +73,28 @@ class SinglyLinkedListWithTail {
     this.length++;
   }
 
-  // benefit of tail
-  push(val) {
-    this.tail.next = new SinglyLinkedListNode(val);
-    this.tail = this.tail.next;
-    this.length++;
+  addStart(val) {
+    this.add(0, val);
   }
 
-  // returns the removed node
-  removeFirst() {
-    if (this.length === 0) {
-      throw buildOutOfBoundsError();
-    };
-    const temp = this.head;
-    this.head = this.head.next;
-    this.length--;
-    return temp;
+  addEnd(val) {
+    this.add(this.length, val);
   }
 
-  // returns the removed node
-  removeAt(index) {
+  // returns the removed value
+  remove(index) {
     if (index < 0 || index >= this.length) {
       throw buildOutOfBoundsError();
     };
     if (index === 0) {
-      return this.removeFirst();
+      const temp = this.head;
+      this.head = this.head.next;
+      // difference of tail: need to update it when removing from length-1 list
+      if (this.length === 1) {
+        this.tail = undefined;
+      }
+      this.length--;
+      return temp.data;
     }
 
     let nextIndex = 1;
@@ -101,20 +105,24 @@ class SinglyLinkedListWithTail {
     }
     const temp = curr.next;
     curr.next = curr.next.next;
+    // difference of tail: need to update it when removing from end of list
+    if (index === this.length - 1) {
+      this.tail = curr;
+    }
     this.length--;
-    return temp;
+    return temp.data;
   }
 
-  // returns the removed node
-  pop() {
-    if (this.length === 0) {
-      throw buildOutOfBoundsError();
-    };
-    return this.removeAt(this.length - 1);
+  removeStart() {
+    return this.remove(0);
+  }
+
+  removeEnd() {
+    return this.remove(this.length - 1);
   }
 
   toString() {
-    let s = 'LinkedList ';
+    let s = 'SinglyLinkedListWithTail ';
 
     let curr = this.head;
     while (curr != null) {
