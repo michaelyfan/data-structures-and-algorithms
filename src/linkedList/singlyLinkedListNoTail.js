@@ -77,21 +77,21 @@ class SinglyLinkedListNoTail {
     if (index < 0 || index >= this.length) {
       throw buildOutOfBoundsError();
     };
-    if (index === 0) {
-      const temp = this.head;
-      this.head = this.head.next;
-      this.length--;
-      return temp.data;
-    }
 
-    let nextIndex = 1;
-    let curr = this.head;
+    // using a placeholder node to begin iteration
+    let curr = new SinglyLinkedListNode(null, this.head);
+    let nextIndex = 0;
     while (nextIndex !== index) {
       curr = curr.next;
       nextIndex++;
     }
     const temp = curr.next;
     curr.next = curr.next.next;
+
+    if (index === 0) {
+      this.head = this.head.next;
+    }
+
     this.length--;
     return temp.data;
   }

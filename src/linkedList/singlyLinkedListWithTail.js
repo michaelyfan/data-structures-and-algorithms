@@ -86,29 +86,28 @@ class SinglyLinkedListWithTail {
     if (index < 0 || index >= this.length) {
       throw buildOutOfBoundsError();
     };
-    if (index === 0) {
-      const temp = this.head;
-      this.head = this.head.next;
-      // difference of tail: need to update it when removing from length-1 list
-      if (this.length === 1) {
-        this.tail = undefined;
-      }
-      this.length--;
-      return temp.data;
-    }
 
-    let nextIndex = 1;
-    let curr = this.head;
+    // using a placeholder node to begin iteration
+    let curr = new SinglyLinkedListNode(null, this.head);
+    let nextIndex = 0;
     while (nextIndex !== index) {
       curr = curr.next;
       nextIndex++;
     }
     const temp = curr.next;
     curr.next = curr.next.next;
-    // difference of tail: need to update it when removing from end of list
+
+    if (index === 0) {
+      this.head = this.head.next;
+    }
+    // difference of tail: need to update it when removing from list
     if (index === this.length - 1) {
+      if (this.length === 1) {
+        this.tail = undefined;
+      }
       this.tail = curr;
     }
+
     this.length--;
     return temp.data;
   }
