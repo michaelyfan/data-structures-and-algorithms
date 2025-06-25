@@ -4,11 +4,11 @@ const { SinglyLinkedListNoTail } = require("./src/linkedList/singlyLinkedListNoT
 
 const main = () => {
   const linkedList = new SinglyLinkedListNoTail();
-  linkedList.push(6);
-  linkedList.push(78);
-  linkedList.push(2);
+  linkedList.addEnd(6);
+  linkedList.addEnd(78);
+  linkedList.addEnd(2);
 
-  const x = linkedList.removeFirst();
+  const x = linkedList.removeStart();
   console.log(x)
   console.log(linkedList.toString())
 }

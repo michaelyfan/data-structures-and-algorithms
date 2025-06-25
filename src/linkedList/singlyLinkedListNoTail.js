@@ -19,18 +19,11 @@ class SinglyLinkedListNoTail {
     this.length = 0;
   }
 
-  /*
-  TODO: revamp to:
-  - getStart
-  - getEnd
-  - get
-  - addStart
-  - add
-  - addEnd
-  - removeStart
-  - remove
-  - removeEnd
-  */
+  getStart(val) {
+    const newHead = new SinglyLinkedListNode(val, this.head);
+    this.head = newHead;
+    this.length++;
+  }
 
   get(index) {
     if (index < 0 || index >= this.length) {
@@ -49,19 +42,22 @@ class SinglyLinkedListNoTail {
     return curr.data;
   }
 
-  addToStart(val) {
-    const newHead = new SinglyLinkedListNode(val, this.head);
-    this.head = newHead;
-    this.length++;
+  getEnd() {
+    return this.get(this.length - 1);
   }
 
-  addAt(index, val) {
+  addStart(val) {
+    const newHead = new SinglyLinkedListNode(val, this.head);
+    this.head = newHead;
+  }
+
+  add(index, val) {
     if (index < 0 || index > this.length) {
       throw buildOutOfBoundsError();
     };
 
     if (index === 0) {
-      this.addToStart(val);
+      this.getStart(val);
       return;
     }
 
@@ -76,12 +72,12 @@ class SinglyLinkedListNoTail {
     this.length++;
   }
 
-  push(val) {
-    this.addAt(this.length, val);
+  addEnd(val) {
+    this.add(this.length, val);
   }
 
   // returns the removed node
-  removeFirst() {
+  removeStart() {
     if (this.length === 0) {
       throw buildOutOfBoundsError();
     };
@@ -92,12 +88,12 @@ class SinglyLinkedListNoTail {
   }
 
   // returns the removed node
-  removeAt(index) {
+  remove(index) {
     if (index < 0 || index >= this.length) {
       throw buildOutOfBoundsError();
     };
     if (index === 0) {
-      return this.removeFirst();
+      return this.removeStart();
     }
 
     let nextIndex = 1;
@@ -112,12 +108,11 @@ class SinglyLinkedListNoTail {
     return temp;
   }
 
-  // returns the removed node
-  pop() {
+  removeEnd() {
     if (this.length === 0){
       throw buildOutOfBoundsError();
     };
-    return this.removeAt(this.length - 1);
+    return this.remove(this.length - 1);
   }
 
   toString() {
