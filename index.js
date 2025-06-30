@@ -1,16 +1,26 @@
 const { Trie } = require("./src/trie");
 const { SinglyLinkedListNoTail } = require("./src/linkedList/singlyLinkedListNoTail");
+const { BinarySearchTree } = require("./src/binarySearchTree");
 
 
 const main = () => {
-  const linkedList = new SinglyLinkedListNoTail();
-  linkedList.addEnd(6);
-  linkedList.addEnd(78);
-  linkedList.addEnd(2);
+  const bst = new BinarySearchTree();
 
-  const x = linkedList.removeStart();
-  console.log(x)
-  console.log(linkedList.toString())
+  bst.insert(10);
+  bst.insert(5);
+  bst.insert(15);
+  bst.insert(3);
+  bst.insert(7);
+  bst.insert(12);
+  bst.insert(18);
+
+  console.log(bst.toString())
+
+  bst.printInOrderTraversal();
+  console.log()
+  bst.printPostOrderTraversal();
+  console.log()
+  bst.printPreOrderTraversal();
 }
 
 main();
