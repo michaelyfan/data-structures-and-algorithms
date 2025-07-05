@@ -118,4 +118,28 @@ describe('Binary search tree', () => {
       expect(bst.head).toBeUndefined();
     });
   });
+
+  describe('traversals', () => {
+    beforeEach(() => {
+      bst.insert(10);
+      bst.insert(5);
+      bst.insert(15);
+      bst.insert(3);
+      bst.insert(7);
+      bst.insert(12);
+      bst.insert(18);
+    });
+
+    test('in order traversal', () => {
+      expect(bst.inOrderTraversal()).toStrictEqual([3,5,7,10,12,15,18]);
+    })
+
+    test('post order traversal', () => {
+      expect(bst.postOrderTraversal()).toStrictEqual([3,7,5,12,18,15,10]);
+    })
+
+    test('pre order traversal', () => {
+      expect(bst.preOrderTraversal()).toStrictEqual([10,5,3,7,15,12,18]);
+    })
+  })
 });

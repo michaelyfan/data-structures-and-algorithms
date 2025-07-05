@@ -41,18 +41,38 @@ class BinarySearchTree {
     this.head = this.#deleteR(this.head, data);
   }
 
-  printInOrderTraversal() {
-    this.#traverse(this.head, Traversal.IN_ORDER);
+  /**
+   * @returns any[]
+   */
+  inOrderTraversal() {
+    const arr = []
+    this.#traverse(this.head, Traversal.IN_ORDER, arr);
+    return arr;
   }
 
-  printPreOrderTraversal() {
-    this.#traverse(this.head, Traversal.PRE_ORDER);
+  /**
+   * @returns any[]
+   */
+  preOrderTraversal() {
+    const arr = []
+    this.#traverse(this.head, Traversal.PRE_ORDER, arr);
+    return arr;
   }
 
-  printPostOrderTraversal() {
-    this.#traverse(this.head, Traversal.POST_ORDER);
+  /**
+   * @returns any[]
+   */
+  postOrderTraversal() {
+    const arr = []
+    this.#traverse(this.head, Traversal.POST_ORDER, arr);
+    return arr;
   }
 
+  inOrderTraversalIterative() {
+    // TODO
+  }
+
+  // written with the assistance of AI
   toString() {
     const lines = [];
     const traverse = (node, prefix = '', isLeft = true) => {
@@ -69,30 +89,31 @@ class BinarySearchTree {
     return lines.join('\n');
   }
 
-
   /**
+   * 
    * @param {TreeNode} node 
-   * @param {method} method 
-   * #
+   * @param {Traversal} method 
+   * @param {any[]} arr 
+   * @returns 
    */
-  #traverse(node, method) {
+  #traverse(node, method, arr) {
     if (node == undefined) return;
 
     switch(method) {
       case Traversal.IN_ORDER:
-        this.#traverse(node.left, method);
-        console.log(node.data);
-        this.#traverse(node.right, method);
+        this.#traverse(node.left, method, arr);
+        arr.push(node.data);
+        this.#traverse(node.right, method, arr);
         break;
       case Traversal.POST_ORDER:
-        this.#traverse(node.left, method);
-        this.#traverse(node.right, method);
-        console.log(node.data);
+        this.#traverse(node.left, method, arr);
+        this.#traverse(node.right, method, arr);
+        arr.push(node.data);
         break;
       case Traversal.PRE_ORDER:
-        console.log(node.data);
-        this.#traverse(node.left, method);
-        this.#traverse(node.right, method);
+        arr.push(node.data);
+        this.#traverse(node.left, method, arr);
+        this.#traverse(node.right, method, arr);
         break;
     }
   }

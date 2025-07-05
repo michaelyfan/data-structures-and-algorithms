@@ -16,11 +16,9 @@ const main = () => {
 
   console.log(bst.toString())
 
-  bst.printInOrderTraversal();
-  console.log()
-  bst.printPostOrderTraversal();
-  console.log()
-  bst.printPreOrderTraversal();
+  console.log(bst.inOrderTraversal());
+  console.log(bst.postOrderTraversal());
+  console.log(bst.preOrderTraversal());
 }
 
 main();
