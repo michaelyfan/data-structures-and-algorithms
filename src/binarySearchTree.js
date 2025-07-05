@@ -1,3 +1,5 @@
+const { DoublyLinkedListWithTail } = require("./linkedList/doublyLinkedListWithTail");
+
 class TreeNode {
   data;
   left;
@@ -70,6 +72,24 @@ class BinarySearchTree {
 
   inOrderTraversalIterative() {
     // TODO
+  }
+
+  /**
+   * @returns any[]
+   */
+  breadthFirstTraversal(data) {
+    if (!this.head) return [];
+
+    const queue = new DoublyLinkedListWithTail(); // LL-backed queue
+    queue.addEnd(this.head);
+    const visited = [];
+    while (queue.length !== 0) {
+      const node = queue.removeStart();
+      visited.push(node.data);
+      if (node.left) queue.addEnd(node.left);
+      if (node.right) queue.addEnd(node.right);
+    }
+    return visited;
   }
 
   // written with the assistance of AI

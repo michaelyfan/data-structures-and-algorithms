@@ -130,16 +130,20 @@ describe('Binary search tree', () => {
       bst.insert(18);
     });
 
-    test('in order traversal', () => {
+    test('in-order traversal', () => {
       expect(bst.inOrderTraversal()).toStrictEqual([3,5,7,10,12,15,18]);
     })
 
-    test('post order traversal', () => {
+    test('post-order traversal', () => {
       expect(bst.postOrderTraversal()).toStrictEqual([3,7,5,12,18,15,10]);
     })
 
-    test('pre order traversal', () => {
+    test('pre-order traversal', () => {
       expect(bst.preOrderTraversal()).toStrictEqual([10,5,3,7,15,12,18]);
+    })
+
+    test('breadth-first traversal', () => {
+      expect(bst.breadthFirstTraversal()).toStrictEqual([10,5,15,3,7,12,18]);
     })
   })
 });
