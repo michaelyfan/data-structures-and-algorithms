@@ -1,16 +1,23 @@
 const { buildOutOfBoundsError } = require('../utils');
 
-class MinHeap {
+class MaxHeap {
   heap; // heap is ONE-INDEXED
-  size; // TODO do you really need size?
+  size; // TODO -- do you really need size? Barely a nice-to-have?
 
-  constructor(heap = []) {
-    this.heap = [0, ...heap];
+  // this is a buildHeap
+  constructor(heap = [], inPlace = false) {
+    this.heap = inPlace
+      ? heap
+      : [0, ...heap]
+    if (inPlace) {
+      this.heap.unshift(0);
+    }
     this.size = heap.length;
-  }
 
-  static buildHeap(arr) {
-
+    // run on non-leaves
+    for (let i = Math.floor(this.size / 2); i > 0; i--) {
+      this.#heapifyDown(i);
+    }
   }
 
   static heapSort(arr) {
@@ -20,7 +27,7 @@ class MinHeap {
   add(n) {
     this.heap.push(n);
     this.size++;
-    this.heapifyUp(this.size);
+    this.#heapifyUp(this.size);
   }
 
   pop() {
@@ -32,12 +39,12 @@ class MinHeap {
     this.heap[1] = this.heap[this.size];
     this.heap.pop();
     this.size--;
-    this.heapifyDown(1);
+    this.#heapifyDown(1);
 
     return temp;
   }
 
-  heapifyUp(i) {
+  #heapifyUp(i) {
     if (i <= 1) {
       // at the top. nothing to heapify.
       return i;
@@ -45,11 +52,11 @@ class MinHeap {
     const parent = Math.floor(i / 2);
     if (this.heap[parent] < this.heap[i]) {
       this.#swap(i, parent);
-      this.heapifyUp(parent);
+      this.#heapifyUp(parent);
     }
   }
 
-  heapifyDown(i) {
+  #heapifyDown(i) {
     const left = 2 * i;
     const right = 2 * i + 1;
     let largest;
@@ -67,7 +74,7 @@ class MinHeap {
 
     if (this.heap[i] < this.heap[largest]) {
       this.#swap(i, largest)
-      this.heapifyDown(largest);
+      this.#heapifyDown(largest);
     }
   }
 
@@ -102,5 +109,5 @@ class MinHeap {
 }
 
 module.exports = {
-  MinHeap
+  MaxHeap
 }
