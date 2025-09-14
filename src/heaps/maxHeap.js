@@ -1,7 +1,13 @@
 const { buildOutOfBoundsError } = require('../utils');
 
+const swap = (arr, a, b) => {
+  const temp = arr[a];
+  arr[a] = arr[b];
+  arr[b] = temp;
+}
+
 class MaxHeap {
-  heap; // heap is ONE-INDEXED
+  heap; // use a leading zero, which makes arithmetic a little simpler. TODO -- actually, not really, and it's annoying ... just get rid of it
   size; // TODO -- do you really need size? Barely a nice-to-have?
 
   // this is a buildHeap
@@ -9,19 +15,15 @@ class MaxHeap {
     this.heap = inPlace
       ? heap
       : [0, ...heap]
+    this.size = heap.length;
     if (inPlace) {
       this.heap.unshift(0);
     }
-    this.size = heap.length;
 
     // run on non-leaves
     for (let i = Math.floor(this.size / 2); i > 0; i--) {
       this.#heapifyDown(i);
     }
-  }
-
-  static heapSort(arr) {
-
   }
 
   add(n) {
@@ -51,7 +53,7 @@ class MaxHeap {
     }
     const parent = Math.floor(i / 2);
     if (this.heap[parent] < this.heap[i]) {
-      this.#swap(i, parent);
+      swap(this.heap, i, parent);
       this.#heapifyUp(parent);
     }
   }
@@ -73,7 +75,7 @@ class MaxHeap {
     }
 
     if (this.heap[i] < this.heap[largest]) {
-      this.#swap(i, largest)
+      swap(this.heap, i, largest)
       this.#heapifyDown(largest);
     }
   }
@@ -101,10 +103,48 @@ class MaxHeap {
     return result;
   }
 
-  #swap(a, b) {
-    const temp = this.heap[a];
-    this.heap[a] = this.heap[b];
-    this.heap[b] = temp;
+  // no leading zero, so arithmetic is a little different
+  static heapSort(arr) {
+    if (arr.length === 1) return arr;
+
+    // [2, 42, 9, 11, 48, 50]
+
+    // first，build the heap
+    for (let i = Math.floor((arr.length - 2) / 2); i >= 0; i--) {
+      MaxHeap.#heapifyDownForHeapSort(arr, i, 0, arr.length - 1);
+    }
+
+    // now that the first element is the largest, move it to a sorted partition
+    let partStart = arr.length - 1;
+    while (partStart !== 0) {
+      swap(arr, 0, partStart);
+      partStart--;
+      MaxHeap.#heapifyDownForHeapSort(arr, 0, 0, partStart);
+    }
+  }
+
+  // TODO: very similar to #heapifyDown, should combine. It can call this. 
+  // Might get annoying to deal with leading or no leading zero.
+  static #heapifyDownForHeapSort(arr, i, start, end) {
+    const left =  2 * i + 1;
+    const right = 2 * i + 2;
+    let largest;
+
+    if (left > end && right > end) {
+      // no children. nothing to heapify.
+      return;
+    } else if (left > end) {
+      largest = right;
+    } else if (right > end) {
+      largest = left;
+    } else {
+      largest = arr[right] > arr[left] ? right : left;
+    }
+
+    if (arr[i] < arr[largest]) {
+      swap(arr, i, largest)
+      MaxHeap.#heapifyDownForHeapSort(arr, largest, start, end);
+    }
   }
 }
 
