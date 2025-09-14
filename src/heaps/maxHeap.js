@@ -119,6 +119,7 @@ class MaxHeap {
     while (partStart !== 0) {
       swap(arr, 0, partStart);
       partStart--;
+      // after the swap, must call heapify down to maintain heap-ness
       MaxHeap.#heapifyDownForHeapSort(arr, 0, 0, partStart);
     }
   }
