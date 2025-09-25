@@ -1,25 +1,20 @@
-const { Trie } = require("./src/trie");
-const { SinglyLinkedListNoTail } = require("./src/linkedList/singlyLinkedListNoTail");
-const { BinarySearchTree } = require("./src/binarySearchTree");
-
+import quickSort from "./src/sorts/quicksort.js";
 
 const main = () => {
-  const bst = new BinarySearchTree();
+  const a = [3, 3, 3, 3, 4, 2];
+  const b = [1, 2, 3, 4, 5, 6];
+  const c = [4, 8, 1, 5, 7, 2];
+  const d = [1, 1, 1, 1, 0, 2];
 
-  bst.insert(10);
-  bst.insert(5);
-  bst.insert(15);
-  bst.insert(3);
-  bst.insert(7);
-  bst.insert(12);
-  bst.insert(18);
+  quickSort(a);
+  quickSort(b);
+  quickSort(c);
+  quickSort(d);
 
-  console.log(bst.toString())
-
-  console.log(bst.inOrderTraversal());
-  console.log(bst.postOrderTraversal());
-  console.log(bst.preOrderTraversal());
-  console.log(bst.breadthFirstTraversal());
+  console.log(a);
+  console.log(b);
+  console.log(c);
+  console.log(d);
 }
 
 main();

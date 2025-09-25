@@ -21,5 +21,6 @@
   "homepage": "https://github.com/michaelyfan/data-structures-and-algorithms#readme",
   "devDependencies": {
     "jest": "^30.0.0"
-  }
+  },
+  "type": "module"
 }
