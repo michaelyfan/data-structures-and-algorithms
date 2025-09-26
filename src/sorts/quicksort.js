@@ -29,7 +29,7 @@ const medianOfThree = (arr, start, end) => {
  * @param {number} end 
  * @returns number the pivot's final index
  */
-const hoarePartition = (arr, start, end) => {
+export const hoarePartition = (arr, start, end) => {
   // usually we just pick the end as the pivot
   // side effect is this causes worst-case time on sorted arrays
   // so use the "median of threes" pivot approach
@@ -57,17 +57,17 @@ const hoarePartition = (arr, start, end) => {
 }
 
 
-const quickSortR = (arr, start, end) => {
+const quicksortR = (arr, start, end) => {
   if (start >= end) {
     return;
   }
   const pivot = hoarePartition(arr, start, end);
-  quickSortR(arr, start, pivot - 1);
-  quickSortR(arr, pivot + 1, end);
+  quicksortR(arr, start, pivot - 1);
+  quicksortR(arr, pivot + 1, end);
 }
 
-const quickSort = (arr) => {
-  quickSortR(arr, 0, arr.length - 1);
+const quicksort = (arr) => {
+  quicksortR(arr, 0, arr.length - 1);
 };
 
-export default quickSort;
+export default quicksort;
