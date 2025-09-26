@@ -5,6 +5,22 @@ const swap = (arr, a, b) => {
   arr[b] = temp;
 }
 
+const medianOfThree = (arr, start, end) => {
+  const median = Math.floor((start + end) / 2);
+  const a = arr[start];
+  const b = arr[median];
+  const c = arr[end];
+
+  // probably naive
+  if (a >= b && a >= c) {
+    return b > c ? median : end;
+  } else if (b >= a && b >= c) {
+    return a > c ? start : end;
+  } else {
+    return a > b ? start : median;
+  }
+}
+
 /**
  * https://en.wikipedia.org/wiki/Quicksort#Hoare_partition_scheme
  * 
@@ -14,23 +30,22 @@ const swap = (arr, a, b) => {
  * @returns number the pivot's final index
  */
 const hoarePartition = (arr, start, end) => {
-  // TODO: optimize pivot selection
-  const pivot = end;
-
+  const pivot = medianOfThree(arr, start, end);
+  swap(arr, pivot, end);
 
   let i = 0;
   let j = end - 1;
 
   while (i <= j) {
-    while (i <= j && arr[i] <= arr[pivot]) {
+    while (i <= j && arr[i] <= arr[end]) {
       i++
     }
-    while (i <= j && arr[j] > arr[pivot]) {
+    while (i <= j && arr[j] > arr[end]) {
       j--
     }
   
     if (i > j) {
-      swap(arr, i, pivot);
+      swap(arr, i, end);
       return i;
     } else {
       swap(arr, i, j);
