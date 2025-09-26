@@ -1,25 +1,10 @@
-const { Trie } = require("./src/trie");
-const { SinglyLinkedListNoTail } = require("./src/linkedList/singlyLinkedListNoTail");
-const { BinarySearchTree } = require("./src/binarySearchTree");
-
+import quickselect from "./src/quickselect.js";
 
 const main = () => {
-  const bst = new BinarySearchTree();
+  const arr = [7, 10, 4, 3, 20, 15];
+  const k = 3;
 
-  bst.insert(10);
-  bst.insert(5);
-  bst.insert(15);
-  bst.insert(3);
-  bst.insert(7);
-  bst.insert(12);
-  bst.insert(18);
-
-  console.log(bst.toString())
-
-  console.log(bst.inOrderTraversal());
-  console.log(bst.postOrderTraversal());
-  console.log(bst.preOrderTraversal());
-  console.log(bst.breadthFirstTraversal());
+  quickselect([...arr], k) 
 }
 
 main();
