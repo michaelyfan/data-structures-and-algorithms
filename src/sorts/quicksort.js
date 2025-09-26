@@ -30,6 +30,9 @@ const medianOfThree = (arr, start, end) => {
  * @returns number the pivot's final index
  */
 const hoarePartition = (arr, start, end) => {
+  // usually we just pick the end as the pivot
+  // side effect is this causes worst-case time on sorted arrays
+  // so use the "median of threes" pivot approach
   const pivot = medianOfThree(arr, start, end);
   swap(arr, pivot, end);
 
